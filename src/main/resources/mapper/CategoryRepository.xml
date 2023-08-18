@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.azeroth.project.repository.CategoryRepository">
+    <select id="findAllMain" resultType="com.azeroth.project.domain.CategoryDomain">
+        SELECT DISTINCT maincode, mainname
+        FROM Category
+    </select>
+    <select id="findAllSub" resultType="com.azeroth.project.domain.CategoryDomain">
+        SELECT DISTINCT subcode, subname
+        FROM Category
+    </select>
+    <select id ="findAll" resultType="com.azeroth.project.domain.CategoryDomain">
+        SELECT maincode, mainname, subcode, subname
+        FROM Category
+    </select>
+</mapper>

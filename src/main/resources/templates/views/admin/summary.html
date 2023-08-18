@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script th:src="@{/js/salessummary.js}"></script>
+
+    <title>AZShop - Sales</title>
+</head>
+<body>
+<div class="d-flex flex-column justify-content-center">
+    <div class="row mb-2 mt-5">
+        <div class="col-md-12">
+            <h2 class="text-center">Sales Summary</h2>
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-2 mb-2">
+        <div class="col-md-12">
+            <h2 class="text-center">User Purchase History</h2>
+        </div>
+    </div>
+    <div>
+        <div>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center">Username</th>
+                    <th class="text-center">Purchased Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${userTotals}">
+                    <td th:text="${user.u_name}" class="text-center"></td>
+                    <td th:text="${user.total}" class="amount text-center"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div>
+            <p class="text-center">Total Sales: $<span id="total"></span></p>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
+    <a class="link-primary my-1 mt-2" href="/admin/portal">Back</a>
+</div>
+</body>
+</html>

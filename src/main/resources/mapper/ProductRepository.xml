@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.azeroth.project.repository.ProductRepository">
+
+    <sql id="SELECT_BASE">
+        SELECT id, p_name, main_cate, sub_cate, p_img, detail, price, stock, p_rank
+        FROM Product
+    </sql>
+
+    <select id="findById">
+        <include refid="SELECT_BASE"/>
+        WHERE id = #{param1}
+    </select>
+
+    <insert id="addProduct" flushCache="true" parameterType="com.azeroth.project.domain.ProductDomain" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO Product
+        (p_name, main_cate, sub_cate, p_img, detail, price, stock, p_rank)
+        VALUES
+        (#{p_name}, #{main_cate}, #{sub_cate}, #{p_img}, #{detail}, #{price}, #{stock}, #{p_rank})
+    </insert>
+
+    <select id="selectFromRow"
+            resultType="com.azeroth.project.domain.ProductDomain">
+        <include refid="SELECT_BASE"/>
+        ORDER BY p_rank, p_name
+        LIMIT #{param1}, #{param2}
+    </select>
+
+    <select id="listBySearch" resultType="com.azeroth.project.domain.ProductDomain">
+        SELECT p.id, p.p_name, p.main_cate, p.sub_cate, p.p_img, p.detail, p.price
+        , p.stock, p.p_rank, c.mainname, c.subname
+        FROM Product p
+        LEFT JOIN Category c ON p.main_cate = c.maincode AND p.sub_cate = c.subcode
+        WHERE UPPER(p.p_name) LIKE CONCAT('%', UPPER(#{param1}), '%')
+        OR UPPER(c.mainname) LIKE CONCAT('%', UPPER(#{param1}), '%')
+        OR UPPER(c.subname) LIKE CONCAT('%', UPPER(#{param1}), '%')
+        ORDER BY p.p_rank, p.p_name;
+    </select>
+
+    <select id="listByCategory" resultType="com.azeroth.project.domain.ProductDomain">
+        <include refid="SELECT_BASE"/>
+        WHERE main_cate = #{param1} AND sub_cate = #{param2}
+        ORDER BY p_rank, p_name
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(id) FROM Product
+    </select>
+
+    <delete id="delete" flushCache="true">
+        DELETE
+        FROM Product
+        WHERE id = #{param1}
+    </delete>
+
+    <update id="update" flushCache="true"
+            parameterType="com.azeroth.project.domain.ProductDomain">
+        UPDATE Product
+        SET p_name = #{p_name}, main_cate = #{main_cate}, sub_cate = #{sub_cate}, detail = #{detail}, price = #{price}, p_img = #{p_img}, stock = #{stock}, p_rank = #{p_rank}
+        WHERE id = #{id}
+    </update>
+
+    <update id="modifyAmount" flushCache="true">
+        UPDATE Product
+        SET stock = #{param2}
+        WHERE id = #{param1}
+    </update>
+
+</mapper>

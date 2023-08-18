@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.azeroth.project.repository.CartRepository">
+    <insert id="addCart" flushCache="true" parameterType="com.azeroth.project.domain.CartDomain" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO
+        Cart (user_id, product_id, amount)
+        VALUES(#{user_id}, #{product_id}, #{amount})
+    </insert>
+
+    <select id="getCart" resultType="com.azeroth.project.domain.CartProduct">
+        SELECT c.id, c.product_id, c.amount, p.p_img, p.p_name, p.price, p.stock
+        FROM Cart c
+        LEFT JOIN Product p
+        ON c.product_id = p.id
+        WHERE c.user_id = #{param1}
+    </select>
+
+    <delete id="deleteCart" flushCache="true">
+        DELETE FROM Cart
+        WHERE id = #{param1}
+    </delete>
+
+    <delete id="deleteCartByProduct" flushCache="true">
+        DELETE FROM Cart
+        WHERE product_id = #{param1}
+    </delete>
+
+    <select id="getAmount" resultType="Long">
+        SELECT amount
+        FROM Cart
+        WHERE user_id = #{param1} AND product_id = #{param2}
+    </select>
+
+    <update id="modifyAmount" flushCache="true">
+        UPDATE Cart
+        SET amount = #{param3}
+        WHERE user_id = #{param1} AND product_id = #{param2}
+    </update>
+
+</mapper>

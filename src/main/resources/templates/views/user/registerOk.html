@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script th:unless="${result > 0 }">
+    alert("Failed to register.");
+    history.back();
+</script>
+<script th:if="${result > 0 }">
+    alert("Created new account!");
+    location.href = "/user/login";
+</script>
+</html>

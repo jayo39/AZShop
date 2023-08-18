@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script th:unless="${result > 0 }">
+    alert("Failed to reset password.");
+    history.back();
+</script>
+<script th:if="${result > 0 }">
+    alert("Password reset!");
+    location.href = "/user/login";
+</script>
+</html>

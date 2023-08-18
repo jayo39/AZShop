@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script th:unless="${result > 0}">
+        alert("Could not add product.")
+        history.back();
+</script>
+<script th:if="${result > 0}" th:inline="javascript">
+        let answer = confirm("Added to cart! Go to your cart?");
+        if(answer) {
+            location.href = "/user/cart";
+        } else {
+            location.href = "/";
+        }
+</script>
+</html>

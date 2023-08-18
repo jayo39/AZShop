@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.azeroth.project.repository.AddressRepository">
+    <insert id="save" flushCache="true" parameterType="com.azeroth.project.domain.AddressDomain">
+        INSERT INTO Address(user_id, name, address, address_detail, postcode)
+        VALUES (#{user_id}, #{name}, #{address}, #{address_detail}, #{postcode})
+    </insert>
+
+    <delete id="delete" flushCache="true">
+        DELETE FROM Address
+        WHERE id = #{param1}
+    </delete>
+
+    <select id="getAddressByUser" resultType="com.azeroth.project.domain.AddressDomain">
+        SELECT id, name, address, address_detail, postcode
+        FROM Address
+        WHERE user_id = #{param1}
+    </select>
+</mapper>

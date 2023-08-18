@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:block th:fragment="review">
+  <th:block sec:authorize="isAuthenticated()">
+    <div class="container my-3 border rounded">
+      <div class="mb-3 mt-2">
+        <div class="col">
+          <div class="stars display-6" id="star-rating">
+            <span class="star" data-rating="1">&#9733;</span>
+            <span class="star" data-rating="2">&#9733;</span>
+            <span class="star" data-rating="3">&#9733;</span>
+            <span class="star" data-rating="4">&#9733;</span>
+            <span class="star" data-rating="5">&#9733;</span>
+          </div>
+          <textarea type="text" class="form-control mt-2" id="input_review"></textarea>
+          <input type="hidden" id="selected-rating-input" name="rating" value="">
+          <div class="text-end mt-1">
+            <button type="button" class="btn btn-outline-danger" id="btn_review">Submit</button>
+          </div>
+          </div>
+        </div>
+      </div>
+  </th:block>
+  <table class="table table-hover mt-3" id="review_table">
+    <thead>
+    <tr>
+      <th style="width: 10%">Rating</th>
+      <th style="width: 50%">Review</th>
+      <th style="width: 10%">Author</th>
+      <th style="width: 20%">Date</th>
+    </tr>
+    </thead>
+    <tbody id="review_list">
+    </tbody>
+  </table>
+</th:block>
+
+</html>

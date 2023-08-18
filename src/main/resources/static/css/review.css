@@ -1,0 +1,17 @@
+.stars {
+  font-size: 30px;
+
+}
+
+.star {
+    transition: color 0.25s;
+    cursor: pointer;
+}
+
+.star:hover, .star.selected {
+  color: orange;
+}
+
+th {
+  white-space: nowrap;
+}

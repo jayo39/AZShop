@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+    <title>AZShop - Home</title>
+    <script th:src="@{/js/categoryHeader.js}"></script>
+</head>
+<body>
+<script th:inline="javascript">
+    var categories = [[${categories}]];
+</script>
+
+<th:block th:insert="~{product/categoryHeader.html::header}"></th:block>
+<th:block th:insert="~{product/searchHeader.html::header}"></th:block>
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-4" th:each="product : ${products}">
+            <div>
+                <a th:href="@{'/product/detail/' + ${product.id}}" class="text-decoration-none thumbnail">
+                    <div th:unless="${product.p_img}" class="image">
+                        <img th:src="@{/image/default.jpg}" style="width:100%" class="img img-responsive full-width img-thumbnail">
+                    </div>
+                    <div th:if="${product.p_img}" class="image">
+                        <img th:src="@{'/upload/' + ${product.p_img}}" style="width:100%" class="img img-responsive full-width img-thumbnail">
+                    </div>
+                    <div class="text-dark text-center mt-2">
+                        <h5 th:text="${product.p_name}"></h5>
+                    </div>
+                    <div class="text-muted font-weight-light text-center">
+                        <p th:if="${product.stock > 0}" th:text="'Price: $' + ${product.price}"></p>
+                        <p class="text-danger" th:if="${product.stock <= 0}" th:text="Sold Out"></p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- pagination -->
+<th:block th:insert="~{product/pagination.html::pagination}"></th:block>
+<!-- pagination -->
+</body>
+</html>

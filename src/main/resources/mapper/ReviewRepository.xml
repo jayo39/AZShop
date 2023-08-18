@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.azeroth.project.repository.ReviewRepository">
+
+    <resultMap id="mapUser" type="com.azeroth.project.domain.UserDomain">
+        <result column="u_id" property="id"/>
+        <result column="u_username" property="username"/>
+    </resultMap>
+
+    <resultMap id="mapReview" type="com.azeroth.project.domain.ReviewDomain">
+        <result column="r_id" property="id"/>
+        <result column="r_content" property="content"/>
+        <result column="r_rating" property="rating"/>
+        <result column="r_product_id" property="product_id"/>
+        <result column="r_reviewdate" property="reviewDate"/>
+        <collection property="user" resultMap="mapUser"/>
+    </resultMap>
+
+    <select id="findByProductId" resultMap="mapReview">
+        SELECT
+            r.id "r_id",
+            r.content "r_content",
+            r.rating "r_rating",
+            r.product_id "r_product_id",
+            r.reviewdate "r_reviewdate",
+            u.id "u_id",
+            u.username "u_username"
+        FROM Review r, User u
+        WHERE r.user_id = u.id
+        AND r.product_id = #{param1}
+        ORDER BY r.id DESC
+    </select>
+
+    <insert id="save" flushCache="true"
+            parameterType="com.azeroth.project.domain.ReviewDomain"
+            keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO Review(user_id, product_id, content, rating)
+        VALUES(#{user_id}, #{product_id}, #{content}, #{rating})
+    </insert>
+
+    <delete id="deleteById" flushCache="true">
+        DELETE FROM Review WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteByProduct" flushCache="true">
+        DELETE FROM Review WHERE product_id = #{param1}
+    </delete>
+
+</mapper>

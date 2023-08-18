@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.azeroth.project.repository.UserRepository">
+    <sql id="SELECT_USER">
+        SELECT id, authority_id, username, password, nickname, email, u_status, phone, regdate, logdate
+        FROM User
+    </sql>
+
+    <select id="getAllUsers" resultType="com.azeroth.project.domain.UserDomain">
+        <include refid="SELECT_USER"/>
+    </select>
+
+    <select id="findById" resultType="com.azeroth.project.domain.UserDomain">
+        <include refid="SELECT_USER"/>
+        WHERE id = #{param1}
+    </select>
+
+    <select id="findByUsername" resultType="com.azeroth.project.domain.UserDomain">
+        <include refid="SELECT_USER"/>
+        WHERE username = #{param1}
+    </select>
+
+    <select id="findByEmail" resultType="com.azeroth.project.domain.UserDomain">
+        <include refid="SELECT_USER"/>
+        WHERE email = #{param1}
+    </select>
+
+    <insert id="register" flushCache="true" parameterType="com.azeroth.project.domain.UserDomain"
+            keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO User(authority_id, username, password, nickname, email, u_status, phone)
+        VALUES(1, #{username}, #{password}, #{nickname}, #{email}, #{u_status}, #{phone})
+    </insert>
+
+    <update id="update" flushCache="true" parameterType="com.azeroth.project.domain.UserDomain">
+        UPDATE User
+        SET nickname = #{nickname}, email = #{email}, phone = #{phone}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete" flushCache="true" parameterType="com.azeroth.project.domain.UserDomain">
+        UPDATE User
+        SET username = #{username}, u_status = #{u_status}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateLog" flushCache="true" parameterType="com.azeroth.project.domain.UserDomain">
+        UPDATE User
+        SET logdate = #{logdate}
+        WHERE id = #{id}
+    </update>
+
+    <update id="resetPassword" flushCache="true" parameterType="com.azeroth.project.domain.UserDomain">
+        UPDATE User
+        SET password = #{password}
+        WHERE id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<th:block th:fragment="header">
+<form th:action="@{/product/search}" method="POST">
+  <div class="container-sm mt-3">
+    <div class="row">
+      <div class="col d-flex input-group">
+        <input class="form-control" type="search" placeholder="Search for any product!" aria-label="Search" name="searchedValue">
+        <button id="productSearch" class="btn btn-primary" type="submit">Search</button>
+      </div>
+    </div>
+  </div>
+</form>
+</th:block>
+</html>

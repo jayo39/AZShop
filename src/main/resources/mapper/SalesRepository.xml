@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.azeroth.project.repository.SalesRepository">
+    <insert id="save" flushCache="true">
+        INSERT INTO Sales(u_name, phone, p_id, amount, address, address_detail, postcode, deliveryreq, total)
+        VALUES(#{u_name}, #{phone}, #{p_id}, #{amount}, #{address}, #{address_detail}, #{postcode}, #{deliveryreq}, #{total})
+    </insert>
+
+    <select id="getSalesByUsername" resultType="com.azeroth.project.domain.SalesDomain">
+        SELECT u_name, phone, p_id, amount, address, address_detail, postcode, deliveryreq, tracknum, regdate
+        FROM Sales
+        WHERE u_name = #{param1}
+    </select>
+
+    <select id="getUserTotal" resultType="com.azeroth.project.domain.UserTotal">
+        SELECT u_name, SUM(total) total
+        FROM Sales
+        Group By u_name;
+    </select>
+</mapper>

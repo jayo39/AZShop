@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script th:unless="${sqlResult > 0}">
+        alert("Failed to add product.")
+        history.back();
+    </script>
+<script th:if="${sqlResult > 0}" th:inline="javascript">
+        alert("Added product!")
+        location.href = "/";
+</script>
+</html>

@@ -1,0 +1,9 @@
+.userinfo td {
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+.tabletitle {
+    white-space: nowrap;
+    overflow-x: auto;
+}

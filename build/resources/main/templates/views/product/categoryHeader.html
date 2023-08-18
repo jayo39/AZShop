@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="header">
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <img src="/image/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        AZShop
+      </a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown" th:each="mainCategory : ${mainCategories}">
+            <a th:text="${mainCategory.mainname}" th:data-maincode="${mainCategory.maincode}" class="nav-link dropdown-toggle text-light" href="#" id="mainCategory_this.getAttribute('data-maincode')" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="showSubCategories(this.getAttribute('data-maincode'))"></a>
+            <ul class="dropdown-menu" th:data-maincode="${mainCategory.maincode}" aria-labelledby="'mainCategory_' + ${this.getAttribute('data-maincode')}">
+              <li th:data-maincode="${mainCategory.maincode}" th:id="'subCategory_' + ${mainCategory.maincode}">
+                <!-- 자바스크립트로 subcategory 나타내기 -->
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="d-flex justify-content-end">
+        <div class="ml-auto">
+          <a class="link-dark" sec:authorize="isAnonymous()" th:href="@{/user/login}">Login</a>
+        </div>
+        <div class="ms-2">
+          <a class="link-dark" sec:authorize="isAnonymous()" th:href="@{/user/register}">Register</a>
+        </div>
+        <form th:action="@{/user/logout}" method="POST" sec:authorize="isAuthenticated()" th:with="user=${#authentication.principal.user}">
+          <span class="d-flex justify-content-end">
+            <div class="ml-auto">
+              <!-- TODO -->
+              <span class="text-dark"><a class="link-dark" th:href="@{/admin/portal}" sec:authorize="hasRole('ADMIN')">Admin</a></span>
+            </div>
+            <div class="ms-2">
+              <span class="text-dark">Welcome, <a class="link-dark" th:href="@{/user/profile}">[[${user.nickname}]]</a></span>
+            </div>
+            <div class="ms-2">
+              <a class="link-dark" th:href="@{/user/cart}">Cart([[${#lists.size(cartProducts)}]])</a>
+            </div>
+            <div class="ms-2">
+              <a class="link-dark" th:href="@{/user/logout}">Logout</a>
+            </div>
+          </span>
+        </form>
+      </div>
+    </div>
+  </nav>
+</th:block>
+</html>

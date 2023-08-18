@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <title>AZShop - Add</title>
+    <script th:src="@{/js/categoryAdd.js}"></script>
+    <script th:src="@{/js/summernote.js}"></script>
+</head>
+<body>
+<script th:inline="javascript">
+    var categories = [[${categories}]]
+</script>
+<div class="container mt-5">
+    <h2>Add Product</h2>
+    <form th:action="@{/product/add}" method="POST" enctype="multipart/form-data">
+        <div class="my-3">
+            <label for="p_name">Product Name:</label>
+            <input type="text" class="form-control" id="p_name" placeholder="Write a product name" name="p_name" th:value="${p_name}">
+            <span class="text-danger" th:if="${error_p_name}" th:utext="${error_p_name}"></span>
+        </div>
+        <div class="my-3">
+            <label class="mr-sm-2" for="main_cate">Main Category</label>
+            <select class="form-control" name="main_cate" id="main_cate" size="1" onchange="updateSubCategories()">
+                <option>Select</option>
+                <option th:each="mainCategory : ${mainCategories}" th:text="${mainCategory.mainname}" th:value="${mainCategory.maincode}"></option>
+            </select>
+            <span class="text-danger" th:if="${error_main_cate}" th:utext="${error_main_cate}"></span>
+        </div>
+        <div class="my-3">
+            <label class="mr-sm-2" for="sub_cate">Sub Category</label>
+            <select class="form-control" name="sub_cate" id="sub_cate" size="1">
+
+            </select>
+            <span class="text-danger" th:if="${error_sub_cate}" th:utext="${error_sub_cate}"></span>
+        </div>
+        <div class="my-3">
+            <label for="detail">Description:</label>
+            <textarea rows="5" type="text" class="form-control" id="detail" placeholder="Write a product description" name="detail" th:utext="${detail}"></textarea>
+        </div>
+        <div class="my-3">
+            <label for="price">Price:</label>
+            <input type="text" class="form-control" id="price" placeholder="Product price" name="price" th:value="${price}">
+            <span class="text-danger" th:if="${error_price}" th:utext="${error_price}"></span>
+        </div>
+        <div class="my-3">
+            <label for="stock">Stock:</label>
+            <input type="text" class="form-control" id="stock" placeholder="Available stock" name="stock" th:value="${stock}">
+        </div>
+        <div class="my-3">
+            <label for="p_rank">Exposure:</label>
+            <input type="text" class="form-control" id="p_rank" placeholder="Product exposure rank" name="p_rank" th:value="${p_rank}">
+        </div>
+        <div class="my-3">
+            <div class="mb-3 mt-3">
+                <label>Product Image:</label>
+                <div id="files">
+                    <div class="input-group mb-2">
+                        <input class="form-control col-xs-3" type="file" name="upfile"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container text-center">
+            <button type="submit" class="btn btn-primary w-25 mt-3">Add Product</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

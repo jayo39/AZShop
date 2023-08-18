@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AZShop - Update</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script th:src="@{/js/summernote.js}"></script>
+</head>
+<body>
+<script th:inline="javascript">
+    var categories = [[${categories}]];
+    var selectedSubCategory = [[${product.sub_cate}]];
+    var selectedMainCategory = [[${product.main_cate}]];
+</script>
+<div class="container mt-5">
+    <h2 th:text="${product.p_name} + ' - Update'"></h2>
+    <form th:action="@{/product/update}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:value="${product.id}"/>
+        <input type="hidden" name="originalImage" th:value="${product.p_img}"/>
+        <div class="my-3">
+            <label for="p_name">Product Name:</label>
+            <input type="text" class="form-control" id="p_name" placeholder="Write a product name" name="p_name" th:value="${p_name == null ? product.p_name : p_name}">
+            <span class="text-danger" th:if="${error_p_name}" th:utext="${error_p_name}"></span>
+        </div>
+        <div class="my-3">
+            <label class="mr-sm-2" for="main_cate">Main Category</label>
+            <select class="form-control" name="main_cate" id="main_cate" size="1" onchange="updateSubCategories()">
+                <option>Select</option>
+                <option th:each="mainCategory : ${mainCategories}" th:text="${mainCategory.mainname}" th:value="${mainCategory.maincode}" th:selected="${product.main_cate == mainCategory.maincode}"></option>
+            </select>
+            <span class="text-danger" th:if="${error_main_cate}" th:utext="${error_main_cate}"></span>
+        </div>
+        <div class="my-3">
+            <label class="mr-sm-2" for="sub_cate">Sub Category</label>
+            <select class="form-control" name="sub_cate" id="sub_cate" size="1">
+
+            </select>
+            <span class="text-danger" th:if="${error_sub_cate}" th:utext="${error_sub_cate}"></span>
+        </div>
+        <div class="my-3">
+            <label for="detail">Description:</label>
+            <textarea rows="5" type="text" class="form-control" id="detail" placeholder="Write a product description" name="detail" th:utext="${detail == null ? product.detail : detail}"></textarea>
+        </div>
+        <div class="my-3">
+            <label for="price">Price:</label>
+            <input type="text" class="form-control" id="price" placeholder="Product price" name="price" th:value="${price == null ? product.price : price}" required>
+            <span class="text-danger" th:if="${error_price}" th:utext="${error_price}"></span>
+        </div>
+        <div class="my-3">
+            <label for="stock">Stock:</label>
+            <input type="text" class="form-control" id="stock" placeholder="Available stock" name="stock" th:value="${stock == null ? product.stock : stock}">
+        </div>
+        <div class="my-3">
+            <label for="p_rank">Exposure:</label>
+            <input type="text" class="form-control" id="p_rank" placeholder="Product exposure rank" name="p_rank" th:value="${p_rank == null ? product.p_rank : p_rank}">
+        </div>
+        <div class="my-3">
+            <div class="mb-3 mt-3">
+                <label>Product Image:</label>
+                <div id="files">
+                    <div class="input-group mb-2">
+                        <input class="form-control col-xs-3" type="file" name="upfile"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container text-center">
+            <button type="submit" class="btn btn-primary w-25 mt-3">Update Product</button>
+        </div>
+    </form>
+</div>
+</body>
+<script th:src="@{/js/updateCategory.js}"></script>
+</html>
