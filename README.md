@@ -18,5 +18,5 @@ AZShop is an e-commerce website powered by Spring, MyBatis and Thymeleaf. Users 
 
 ## Contact Information
 
-- Email: sjeaho@gmail
+- Email: sjeaho@gmail.com
 - Discord: @jayo39
