@@ -56,6 +56,7 @@ public class UserController {
     public void register(){;}
 
     @PostMapping("/register")
+    @Transactional
     public String registerOk(@Valid UserDomain user
             , BindingResult result
             , Model model
@@ -63,11 +64,11 @@ public class UserController {
     ) {
 
         if(!result.hasFieldErrors("username") && userService.isExist(user.getUsername())) {
-            result.rejectValue("username", "이미 존재하는 아이디 입니다.");
+            result.rejectValue("username", "This username already exists.");
         }
 
         if(!result.hasFieldErrors("email") && userService.isExistEmail(user.getEmail())) {
-            result.rejectValue("email", "이미 존재하는 이메일 입니다.");
+            result.rejectValue("email", "This email already exists.");
         }
 
         // if there was an error
