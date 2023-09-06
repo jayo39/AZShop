@@ -29,7 +29,6 @@
         <form th:action="@{/user/logout}" method="POST" sec:authorize="isAuthenticated()" th:with="user=${#authentication.principal.user}">
           <span class="d-flex justify-content-end">
             <div class="ml-auto">
-              <!-- TODO -->
               <span class="text-dark"><a class="link-dark" th:href="@{/admin/portal}" sec:authorize="hasRole('ADMIN')">Admin</a></span>
             </div>
             <div class="ms-2">
